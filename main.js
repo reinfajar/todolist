@@ -9,21 +9,43 @@ function show() {
         let btnHapus = "<a href='#' onclick='deleteTodo(" + i + ")'>Hapus</a>";
         // let mvUp = "<a href='#' onclick='swapUp'(" + i + ")'>Move Up</a>"
         // let mvDown = "<a href='#' onclick='swapDown'(" + i + ")'>Move Down</a>"
-        list.innerHTML += "<li>" + todo[i] + " [" + btnEdit + " | " + btnHapus + /*"  | " + mvUp + " | " + mvDown + */" ]</li>";
+        list.innerHTML += "<li>" + todo[i] + " [" + btnEdit + " | " + btnHapus + /*"  | " + mvUp + " | " + mvDown + */ " ]</li>";
     }
 }
 
+var tambah = document.getElementById("todo");
+
+tambah.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("tambah").click();
+  }
+});
+
 function add() {
     let input = document.querySelector("input[name=todo]");
+    if (input.value.length == 0) {
+        alert("No Value")
+        return
+    }
     todo.push(input.value);
     show();
 }
 
 function edit(id) {
-    let newTodo = document.querySelector("input[name=todo]");
-    todo[id] = newTodo.value;
-    // let newTodo = prompt('Nama Baru', todo[id])
-    // todo[id] = newTodo
+    // let newTodo = document.querySelector("input[name=todo]");
+    // todo[id] = newTodo.value;
+    let newTodo = prompt('Nama Baru', todo[id])
+    let status = false
+    while (!status) {
+        if (newTodo.length == 0 || newTodo == '') {
+            alert('Gagal')
+            newTodo = prompt('Nama Baru', todo[id])
+        } else {
+            status = true
+        }
+    }
+    todo[id] = newTodo
     show();
 }
 
